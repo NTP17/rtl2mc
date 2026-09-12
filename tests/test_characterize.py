@@ -25,7 +25,8 @@ class EvidenceAdmissionTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
-        self.root = Path(self.temporary.name)
+        # Match project.ROOT, including expansion of Windows short-path aliases.
+        self.root = Path(self.temporary.name).resolve()
         self.run = self.root / "results/synthetic"
         self.run.mkdir(parents=True)
         self.case = {"id": "synthetic", "ticks": 1, "actions": {1: ["synthetic action"]},
