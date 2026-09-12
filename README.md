@@ -17,7 +17,7 @@ flowchart TD
     SIM --> MC[Vanilla Minecraft checks]
     MC --> SAVE[Save and reopen]
     SAVE --> WORLD[World folder + ZIP]
-    WORLD --> GT[Native GameTest for examples]
+    WORLD --> GT[Native GameTest]
 ```
 
 ## Quick start
