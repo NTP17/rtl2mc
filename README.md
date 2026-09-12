@@ -131,9 +131,7 @@ timing checks; its flow records that limitation and uses procedural guards.
 | `tests/evidence/` | Optional audits of archived laboratory measurements |
 | `docs/` | Usage, tool setup, testing and validation records |
 
-Installed tools, generated saves, proprietary binaries, machine settings and raw
-measurement archives are excluded from Git. The optional historical lab bundle
-can be restored into ignored directories when needed.
+
 
 ## Documentation
 
