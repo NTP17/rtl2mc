@@ -10,7 +10,7 @@ native GameTest runner checks the four example designs against independent
 reference models.
 
 ```mermaid
-flowchart LR
+flowchart TD
     RTL[RTL + file list] --> SYN[DC / Genus / Yosys]
     SYN --> MAP[Redstone placement and routing]
     MAP --> SIM[VCS / Xcelium / Questa / Icarus]
