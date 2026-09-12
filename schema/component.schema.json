@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Redstone primitive contract, version 1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "technology", "kind", "blocks", "ports", "state", "behavior", "timing", "physical", "evidence", "mapping_eligible"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+    "technology": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["primitive", "cell"]},
+    "blocks": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^minecraft:[a-z0-9_]+$"}},
+    "ports": {"type": "array", "minItems": 1, "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "domain", "direction", "location"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "domain": {"enum": ["power_level", "block_power", "block_update", "state", "world_event"]},
+        "direction": {"enum": ["input", "output", "inout"]},
+        "location": {"type": "string", "minLength": 1}
+      }
+    }},
+    "state": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "behavior": {"type": "object", "additionalProperties": false,
+      "required": ["description", "limitations"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "timing": {"type": "object", "additionalProperties": false,
+      "required": ["unit", "arcs", "uncharacterized"],
+      "properties": {
+        "unit": {"const": "game_tick"},
+        "arcs": {"type": "array", "maxItems": 0},
+        "uncharacterized": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "physical": {"type": "object", "additionalProperties": false,
+      "required": ["description", "verified_transforms"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1},
+        "verified_transforms": {"type": "array", "maxItems": 0}
+      }
+    },
+    "evidence": {"type": "object", "additionalProperties": false,
+      "required": ["status", "sources", "fixtures", "measurements"],
+      "properties": {
+        "status": {"enum": ["draft", "documented"]},
+        "sources": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "fixtures": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "fixture_suites": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "characterizations": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "pattern": "^characterizations/[a-z0-9_.-]+\\.json$"},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          }
+        }},
+        "executable_models": {"type": "array", "minItems": 1, "items": {
+          "type": "object", "additionalProperties": false, "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "pattern": "^models/[a-z0-9_.-]+\\.json$"},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          }
+        }},
+        "measurements": {"type": "array", "maxItems": 0}
+      }
+    },
+    "mapping_eligible": {"const": false}
+  }
+}

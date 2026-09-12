@@ -1,0 +1,110 @@
+{
+  "gametest_setup": {
+    "ecj": "3.39.0",
+    "mappings": "Minecraft Java 1.21.1",
+    "method": "Fresh downloads checked against pinned digests in the isolated checkout",
+    "pass": true
+  },
+  "isolation": {
+    "byte_pinned_sources_preserved": true,
+    "canonical_views_verified": true,
+    "local_links_verified": true,
+    "optional_lab_files_restored": 736,
+    "source": "New directory exported from the Git index with core.autocrlf=true"
+  },
+  "limits": [
+    "The 48-run historical matrix was not rerun as part of repository preparation.",
+    "The new smoke reused existing Java, Yosys, Questa and the pinned Minecraft server; it is not a clean-host installation qualification.",
+    "Windows/Linux GitHub Actions jobs are configured; remote CI has not run."
+  ],
+  "offline_tests": {
+    "log_sha256": "ace9aff3d365ac682bae8e550c02c62d61658f56b01813b550d66e35c62babbe",
+    "optional_archived_evidence": 15,
+    "pass": true,
+    "self_contained": 118,
+    "total": 133
+  },
+  "physical_smoke": {
+    "audit_sha256": "c1b9ba8b8c7785e14b7f9a1d9075e0323db3a5274079550f85383c1535065df1",
+    "broken_output_control": "Expected native GameTest assertion failure verified",
+    "designs": [
+      "adder",
+      "counter"
+    ],
+    "implementation_sha256": {
+      "redstone_pdk/lab.py": "90b38f9f7a6c498e5208f76da96e5793061192a583e9fc07e402f78c69eb3924",
+      "redstone_pdk/logic_cells.py": "177442c1a001dda0326b90e020dd0fc39fff781f8bcd36281c4813ed451880be",
+      "redstone_pdk/mapping_lab.py": "993bb37e94d2eab6d265950745c57f50e2064b190a8aabedd6f5fd6cfe5dd445",
+      "redstone_pdk/mapping_validation.py": "fbfd0f4022c76f1e5252fd661e340746c7ece9d4714eb2bf842d3f4d54d44dad",
+      "redstone_pdk/mapping_views.py": "f613e239c940ed0ac24d98f4962798d9a196c53b2e6ecc8bac47124af144cd72",
+      "redstone_pdk/rcon.py": "d8a334f8577b230fc9d27cc199cba8b0ba2a73c0819b79a7d9ab90925414cd54",
+      "redstone_pdk/results.py": "66edf155c69470ece338bcc03f9bb9ad96d407a178cd091b635668b61e30ddc7",
+      "redstone_pdk/router.py": "dfc97fd94e60c92796ae7caa142537931e6b1bb294425bfacdf4c4cce4c93482",
+      "redstone_pdk/rtl.py": "573d547c8fc399b33cd8fe8c24eb3428ed4515c1a88397ed429d252030399966",
+      "rtl2mc/__init__.py": "1a49bea1cacbae741b38cbc60a2ccdb84b47a04c9cd1aa7481bae8d331586f63",
+      "rtl2mc/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+      "rtl2mc/cli.py": "5ef2d9b0c4a990e7008e27ab382847abf0551280ece2b50cff8de32c68e34020",
+      "rtl2mc/common.py": "936893700df3e21264866d183fb0f299f36facbe3518ef86ce1e2cbe3c0d4b86",
+      "rtl2mc/filelist.py": "f0a0423bdc5bf732b0f90b6dea155de2f3533efaf07152396072a3837b6d9c9d",
+      "rtl2mc/frontend.py": "458bbc5530ef12d74f3dba2e2d25affa9acac97a890ccc1a4ff88f966718937a",
+      "rtl2mc/gametest.py": "e43d075a2e4673ba71e258e774adc0dda7e151b799eba53b524973d5d9cd07e8",
+      "rtl2mc/install.py": "b7904412cb7a940504ba5acc94a179021db1a0c574a434cc1c10e872e5d91504",
+      "rtl2mc/minecraft.py": "4b5a175f01b1ca2ea5c91a84b50a60d3fa540d17f26d70806cb1287bf86ecc9c",
+      "rtl2mc/nbt.py": "9c8c24e19c2ce92ccaeb78ea27fd48bd8b4d4d360a2431425c7b84124361b0f8",
+      "rtl2mc/toolchain.py": "6d572e57844854a48c05c38499ac89f2ebb00b99e9f525a5caf7095ff6509c91",
+      "rtl2mc/verification.py": "9f9b6e0d41441a3e6e1e0bd822f88058a2b82f0bc6b60e076eff03448723a65d",
+      "rtl2mc/views.py": "e85d068f2b682cb7d97bfdf2ca8727ee707541445e9ba99e0c6d5cc6d6ca790b",
+      "rtl2mc/world.py": "fd2b88285fdd4c9819f2e8f185b7c440f1a5c4318537a4f7696427303545f7f3"
+    },
+    "minecraft": "1.21.1",
+    "pass": true,
+    "report_sha256": "627b28bb2d55f4f02f368b05a59fc5a516876207bc9912857600b84c71273ac1",
+    "results": [
+      {
+        "blocks": 12164,
+        "gametest_output_bit_comparisons": 18,
+        "gametest_samples": 9,
+        "golden_sha256": "428d8132a974e83a9427e87e53e6109f109f8fa8f18dea3d6f414c616fcaf9ba",
+        "layout_sha256": "b227c9ebb93334f570225783185935e5c66ed065537b80c688ee5a59117e936e",
+        "logic_cells": 12,
+        "pass": true,
+        "physical_comparisons": 264,
+        "reopen_comparisons": 33,
+        "simulation": "questa",
+        "synthesis": "yosys",
+        "top": "adder",
+        "vectors_sha256": "80174522227275c844302042ad991c1ed62bc561ea4cada525b75c2f4385fdb4"
+      },
+      {
+        "blocks": 18456,
+        "gametest_output_bit_comparisons": 50,
+        "gametest_samples": 25,
+        "golden_sha256": "9cbea925315d2da7a23c37a5c542723835d750ecaf17407bf8907ff22f56203c",
+        "layout_sha256": "0b7d498e30c18062f6e9e052d15db8aba58c700f59c0a40eb7bec47579bb0886",
+        "logic_cells": 15,
+        "pass": true,
+        "physical_comparisons": 546,
+        "reopen_comparisons": 42,
+        "simulation": "questa",
+        "synthesis": "yosys",
+        "top": "counter",
+        "vectors_sha256": "a2cea29630fa8648157d343bb0b4daf011cfeafa342aa252b8b02bbddcaae8cb"
+      }
+    ],
+    "runs_audited": 2,
+    "simulation": "questa",
+    "synthesis": "yosys",
+    "totals": {
+      "blocks": 30620,
+      "gametest_output_bit_comparisons": 68,
+      "gametest_samples": 34,
+      "physical_comparisons": 810,
+      "reopen_comparisons": 75
+    }
+  },
+  "platform": "Linux x86-64",
+  "prepared_utc": "2026-09-12T07:46:36.448797+00:00",
+  "python_version": "3.13.15",
+  "schema_version": 1,
+  "source_delivery": "Source checkout; no wheel or remote publication"
+}

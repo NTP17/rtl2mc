@@ -1,0 +1,9 @@
+RTL2MC
+Copyright 2026 RTL2MC contributors.
+
+RTL2MC's original source code, documentation, examples, and project-authored
+model and circuit data are licensed under the Apache License, Version 2.0.
+See LICENSE for the full terms.
+
+Third-party material retains its own copyright and license notices.
+See THIRD_PARTY_NOTICES.md and instrumentation/THIRD_PARTY_NOTICES.txt.

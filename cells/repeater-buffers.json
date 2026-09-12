@@ -1,0 +1,557 @@
+{
+  "schema_version": 1,
+  "id": "java_1_21_1_guarded_buffers_v1",
+  "technology": "java-1.21.1-vanilla",
+  "admission": {
+    "path": "characterizations/repeater-cells-v1.json",
+    "content_sha256": "bd0497920b0dcfc9bd31c787fb498067a6211be61a76eacba1cc9199e7e08e54"
+  },
+  "eda_time_scale": {
+    "canonical_unit": "game_tick",
+    "export_unit": "1ns",
+    "game_ticks_per_export_unit": 1,
+    "meaning": "abstract simulation scale; never elapsed wall-clock nanoseconds"
+  },
+  "cells": [
+    {
+      "name": "RSBUF2",
+      "kind": "guarded_binary_buffer",
+      "primitive": "repeater",
+      "setting": 1,
+      "function": "Y = A",
+      "mapping_eligible": false,
+      "use": "explicit_instances_with_envelope_checks",
+      "ports": {
+        "A": {
+          "direction": "input",
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "access_face": "west",
+          "levels": [
+            0,
+            15
+          ]
+        },
+        "Y": {
+          "direction": "output",
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "access_face": "east",
+          "levels": [
+            0,
+            15
+          ],
+          "external_connections_admitted": false
+        }
+      },
+      "physical": {
+        "origin": "repeater block; local +x is the output direction",
+        "blocks": [
+          {
+            "position": [
+              -1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          },
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "state": "minecraft:repeater[facing=west,delay=1]"
+          },
+          {
+            "position": [
+              1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          }
+        ],
+        "reserved_box": {
+          "min": [
+            -3,
+            -1,
+            -2
+          ],
+          "max": [
+            3,
+            2,
+            2
+          ]
+        },
+        "support": "entire reserved box at y=-1 is stone; no external power is applied to it",
+        "air": "all other reserved positions except the three body blocks and stimulus source",
+        "stimulus_source": {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "states": [
+            "minecraft:air",
+            "minecraft:redstone_block"
+          ]
+        },
+        "rotations_quarter_turns": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "mirrors": [],
+        "output_load": "the single included Y dust block; no external receiver or extra dust"
+      },
+      "protocol": {
+        "time_unit": "game_tick",
+        "input_encoding": "A=0 means power 0; A=1 means power 15",
+        "initial_settle_game_ticks": 20,
+        "initial_A": [
+          0,
+          1
+        ],
+        "minimum_high_game_ticks": 3,
+        "minimum_low_game_ticks": 3,
+        "stimulus_phase": "ordered source replacement after a completed game tick",
+        "sampling_phase": "after all scheduled work and source updates at each game tick",
+        "one_input_transition_per_game_tick": true
+      },
+      "timing": {
+        "time_unit": "game_tick",
+        "arcs": [
+          {
+            "from": "A",
+            "to": "Y",
+            "sense": "positive_unate",
+            "rise": 2,
+            "fall": 2
+          }
+        ],
+        "scope": "all legal histories under the declared operating assumptions"
+      },
+      "assumptions": [
+        "Java Edition 1.21.1 vanilla, pinned official server build",
+        "All affected chunks remain loaded; scheduled ticks are not deferred by a work backlog",
+        "Static horizontal layout on rigid stone support; reserved air stays empty",
+        "Only the source port changes; no player interactions, block moves, or forced state edits",
+        "No incoming power through the floor, above, below, or outside the input source",
+        "No output connections, side drivers, feedback, or shared nets; probe reads do not load Y"
+      ]
+    },
+    {
+      "name": "RSBUF4",
+      "kind": "guarded_binary_buffer",
+      "primitive": "repeater",
+      "setting": 2,
+      "function": "Y = A",
+      "mapping_eligible": false,
+      "use": "explicit_instances_with_envelope_checks",
+      "ports": {
+        "A": {
+          "direction": "input",
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "access_face": "west",
+          "levels": [
+            0,
+            15
+          ]
+        },
+        "Y": {
+          "direction": "output",
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "access_face": "east",
+          "levels": [
+            0,
+            15
+          ],
+          "external_connections_admitted": false
+        }
+      },
+      "physical": {
+        "origin": "repeater block; local +x is the output direction",
+        "blocks": [
+          {
+            "position": [
+              -1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          },
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "state": "minecraft:repeater[facing=west,delay=2]"
+          },
+          {
+            "position": [
+              1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          }
+        ],
+        "reserved_box": {
+          "min": [
+            -3,
+            -1,
+            -2
+          ],
+          "max": [
+            3,
+            2,
+            2
+          ]
+        },
+        "support": "entire reserved box at y=-1 is stone; no external power is applied to it",
+        "air": "all other reserved positions except the three body blocks and stimulus source",
+        "stimulus_source": {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "states": [
+            "minecraft:air",
+            "minecraft:redstone_block"
+          ]
+        },
+        "rotations_quarter_turns": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "mirrors": [],
+        "output_load": "the single included Y dust block; no external receiver or extra dust"
+      },
+      "protocol": {
+        "time_unit": "game_tick",
+        "input_encoding": "A=0 means power 0; A=1 means power 15",
+        "initial_settle_game_ticks": 20,
+        "initial_A": [
+          0,
+          1
+        ],
+        "minimum_high_game_ticks": 5,
+        "minimum_low_game_ticks": 5,
+        "stimulus_phase": "ordered source replacement after a completed game tick",
+        "sampling_phase": "after all scheduled work and source updates at each game tick",
+        "one_input_transition_per_game_tick": true
+      },
+      "timing": {
+        "time_unit": "game_tick",
+        "arcs": [
+          {
+            "from": "A",
+            "to": "Y",
+            "sense": "positive_unate",
+            "rise": 4,
+            "fall": 4
+          }
+        ],
+        "scope": "all legal histories under the declared operating assumptions"
+      },
+      "assumptions": [
+        "Java Edition 1.21.1 vanilla, pinned official server build",
+        "All affected chunks remain loaded; scheduled ticks are not deferred by a work backlog",
+        "Static horizontal layout on rigid stone support; reserved air stays empty",
+        "Only the source port changes; no player interactions, block moves, or forced state edits",
+        "No incoming power through the floor, above, below, or outside the input source",
+        "No output connections, side drivers, feedback, or shared nets; probe reads do not load Y"
+      ]
+    },
+    {
+      "name": "RSBUF6",
+      "kind": "guarded_binary_buffer",
+      "primitive": "repeater",
+      "setting": 3,
+      "function": "Y = A",
+      "mapping_eligible": false,
+      "use": "explicit_instances_with_envelope_checks",
+      "ports": {
+        "A": {
+          "direction": "input",
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "access_face": "west",
+          "levels": [
+            0,
+            15
+          ]
+        },
+        "Y": {
+          "direction": "output",
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "access_face": "east",
+          "levels": [
+            0,
+            15
+          ],
+          "external_connections_admitted": false
+        }
+      },
+      "physical": {
+        "origin": "repeater block; local +x is the output direction",
+        "blocks": [
+          {
+            "position": [
+              -1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          },
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "state": "minecraft:repeater[facing=west,delay=3]"
+          },
+          {
+            "position": [
+              1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          }
+        ],
+        "reserved_box": {
+          "min": [
+            -3,
+            -1,
+            -2
+          ],
+          "max": [
+            3,
+            2,
+            2
+          ]
+        },
+        "support": "entire reserved box at y=-1 is stone; no external power is applied to it",
+        "air": "all other reserved positions except the three body blocks and stimulus source",
+        "stimulus_source": {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "states": [
+            "minecraft:air",
+            "minecraft:redstone_block"
+          ]
+        },
+        "rotations_quarter_turns": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "mirrors": [],
+        "output_load": "the single included Y dust block; no external receiver or extra dust"
+      },
+      "protocol": {
+        "time_unit": "game_tick",
+        "input_encoding": "A=0 means power 0; A=1 means power 15",
+        "initial_settle_game_ticks": 20,
+        "initial_A": [
+          0,
+          1
+        ],
+        "minimum_high_game_ticks": 7,
+        "minimum_low_game_ticks": 7,
+        "stimulus_phase": "ordered source replacement after a completed game tick",
+        "sampling_phase": "after all scheduled work and source updates at each game tick",
+        "one_input_transition_per_game_tick": true
+      },
+      "timing": {
+        "time_unit": "game_tick",
+        "arcs": [
+          {
+            "from": "A",
+            "to": "Y",
+            "sense": "positive_unate",
+            "rise": 6,
+            "fall": 6
+          }
+        ],
+        "scope": "all legal histories under the declared operating assumptions"
+      },
+      "assumptions": [
+        "Java Edition 1.21.1 vanilla, pinned official server build",
+        "All affected chunks remain loaded; scheduled ticks are not deferred by a work backlog",
+        "Static horizontal layout on rigid stone support; reserved air stays empty",
+        "Only the source port changes; no player interactions, block moves, or forced state edits",
+        "No incoming power through the floor, above, below, or outside the input source",
+        "No output connections, side drivers, feedback, or shared nets; probe reads do not load Y"
+      ]
+    },
+    {
+      "name": "RSBUF8",
+      "kind": "guarded_binary_buffer",
+      "primitive": "repeater",
+      "setting": 4,
+      "function": "Y = A",
+      "mapping_eligible": false,
+      "use": "explicit_instances_with_envelope_checks",
+      "ports": {
+        "A": {
+          "direction": "input",
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "access_face": "west",
+          "levels": [
+            0,
+            15
+          ]
+        },
+        "Y": {
+          "direction": "output",
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "access_face": "east",
+          "levels": [
+            0,
+            15
+          ],
+          "external_connections_admitted": false
+        }
+      },
+      "physical": {
+        "origin": "repeater block; local +x is the output direction",
+        "blocks": [
+          {
+            "position": [
+              -1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          },
+          {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "state": "minecraft:repeater[facing=west,delay=4]"
+          },
+          {
+            "position": [
+              1,
+              0,
+              0
+            ],
+            "state": "minecraft:redstone_wire"
+          }
+        ],
+        "reserved_box": {
+          "min": [
+            -3,
+            -1,
+            -2
+          ],
+          "max": [
+            3,
+            2,
+            2
+          ]
+        },
+        "support": "entire reserved box at y=-1 is stone; no external power is applied to it",
+        "air": "all other reserved positions except the three body blocks and stimulus source",
+        "stimulus_source": {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "states": [
+            "minecraft:air",
+            "minecraft:redstone_block"
+          ]
+        },
+        "rotations_quarter_turns": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "mirrors": [],
+        "output_load": "the single included Y dust block; no external receiver or extra dust"
+      },
+      "protocol": {
+        "time_unit": "game_tick",
+        "input_encoding": "A=0 means power 0; A=1 means power 15",
+        "initial_settle_game_ticks": 20,
+        "initial_A": [
+          0,
+          1
+        ],
+        "minimum_high_game_ticks": 9,
+        "minimum_low_game_ticks": 9,
+        "stimulus_phase": "ordered source replacement after a completed game tick",
+        "sampling_phase": "after all scheduled work and source updates at each game tick",
+        "one_input_transition_per_game_tick": true
+      },
+      "timing": {
+        "time_unit": "game_tick",
+        "arcs": [
+          {
+            "from": "A",
+            "to": "Y",
+            "sense": "positive_unate",
+            "rise": 8,
+            "fall": 8
+          }
+        ],
+        "scope": "all legal histories under the declared operating assumptions"
+      },
+      "assumptions": [
+        "Java Edition 1.21.1 vanilla, pinned official server build",
+        "All affected chunks remain loaded; scheduled ticks are not deferred by a work backlog",
+        "Static horizontal layout on rigid stone support; reserved air stays empty",
+        "Only the source port changes; no player interactions, block moves, or forced state edits",
+        "No incoming power through the floor, above, below, or outside the input source",
+        "No output connections, side drivers, feedback, or shared nets; probe reads do not load Y"
+      ]
+    }
+  ]
+}

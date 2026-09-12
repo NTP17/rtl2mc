@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "id": "java-1.21.1-vanilla",
+  "edition": "java",
+  "minecraft_version": "1.21.1",
+  "required_java_major": 21,
+  "data_pack_format": 48,
+  "time": {
+    "canonical_unit": "game_tick",
+    "nominal_game_ticks_per_second": 20,
+    "game_ticks_per_redstone_tick": 2,
+    "wall_clock_is_not_a_delay_measurement": true
+  },
+  "power": {
+    "minimum": 0,
+    "maximum": 15,
+    "powering_mode_and_direction_are_separate_from_level": true
+  },
+  "measurement": {
+    "backend": "vanilla-rcon-tick-step",
+    "resolution": "after_command_and_completed_game_tick",
+    "intra_tick_order_observed": false,
+    "scope": "Static fixtures in one loaded overworld test region; no players required."
+  },
+  "server": {
+    "metadata_url": "https://piston-meta.mojang.com/v1/packages/ddac7e292d1695b3d85db993c4e4eb06aa636c56/1.21.1.json",
+    "metadata_sha1": "ddac7e292d1695b3d85db993c4e4eb06aa636c56",
+    "url": "https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar",
+    "sha1": "59353fb40c36d304f2035d51e7d6e6baa98dc05c",
+    "size": 51627615
+  },
+  "windows_x64_runtime": {
+    "distribution": "Eclipse Temurin",
+    "release": "jdk-21.0.12.1+1",
+    "url": "https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.12.1%2B1/OpenJDK21U-jre_x64_windows_hotspot_21.0.12.1_1.zip",
+    "sha256": "d35f31e712f0fcf6ac5a093edc90204fbff22f720ba3950bd09d331d5e621636",
+    "size": 48999141
+  },
+  "sources": [
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-1",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-20-3",
+    "https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture=x64&image_type=jre&os=windows&vendor=eclipse"
+  ]
+}
+

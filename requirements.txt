@@ -1,0 +1,3 @@
+# The Python application and offline tests use only the standard library.
+# Requires Python >= 3.12. Run from this source checkout; no pip install needed.
+# EDA tools and Java are external programs; see docs/toolchains.md.

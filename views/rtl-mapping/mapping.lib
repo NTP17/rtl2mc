@@ -1,0 +1,116 @@
+library (redstone_mapping) {
+  delay_model : table_lookup;
+  time_unit : "1ns";
+  voltage_unit : "1V";
+  current_unit : "1mA";
+  pulling_resistance_unit : "1kohm";
+  leakage_power_unit : "1nW";
+  capacitive_load_unit (1,pf);
+  nom_process : 1;
+  nom_temperature : 25;
+  nom_voltage : 1;
+  default_cell_leakage_power : 0;
+  input_threshold_pct_rise : 50;
+  input_threshold_pct_fall : 50;
+  output_threshold_pct_rise : 50;
+  output_threshold_pct_fall : 50;
+  slew_lower_threshold_pct_rise : 20;
+  slew_upper_threshold_pct_rise : 80;
+  slew_lower_threshold_pct_fall : 20;
+  slew_upper_threshold_pct_fall : 80;
+  default_input_pin_cap : 1;
+  default_output_pin_cap : 0;
+  default_max_transition : 1;
+  operating_conditions (game_tick) { process : 1; voltage : 1; temperature : 25; }
+  default_operating_conditions : game_tick;
+  /* Abstract binary timing units; capacitance/voltage are placeholders, not Minecraft electrical quantities. */
+  cell (RMAP_NOR2) {
+    area : 102;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (B) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "!(A | B)"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : negative_unate;
+        cell_rise (scalar) { values ("8"); } cell_fall (scalar) { values ("8"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+      timing () { related_pin : "B"; timing_type : combinational; timing_sense : negative_unate;
+        cell_rise (scalar) { values ("8"); } cell_fall (scalar) { values ("8"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_INV) {
+    area : 102;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "!A"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : negative_unate;
+        cell_rise (scalar) { values ("8"); } cell_fall (scalar) { values ("8"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_DFF) {
+    area : 221;
+    ff (IQ, IQN) { clocked_on : "CLK"; next_state : "D"; }
+    pin (D) { direction : input; capacitance : 1;
+      timing () { related_pin : "CLK"; timing_type : setup_rising; rise_constraint (scalar) { values ("11"); } fall_constraint (scalar) { values ("11"); } }
+      timing () { related_pin : "CLK"; timing_type : hold_rising; rise_constraint (scalar) { values ("3"); } fall_constraint (scalar) { values ("3"); } }
+    }
+    pin (CLK) { direction : input; capacitance : 1;
+      clock : true; min_pulse_width_high : 17; min_pulse_width_low : 17;
+    }
+    pin (Q) { direction : output; function : "IQ"; max_capacitance : 100000;
+      timing () { related_pin : "CLK"; timing_type : rising_edge; timing_sense : non_unate;
+        cell_rise (scalar) { values ("14"); } cell_fall (scalar) { values ("14"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_BUF2) {
+    area : 3;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "A"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : positive_unate;
+        cell_rise (scalar) { values ("2"); } cell_fall (scalar) { values ("2"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_BUF4) {
+    area : 3;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "A"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : positive_unate;
+        cell_rise (scalar) { values ("4"); } cell_fall (scalar) { values ("4"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_BUF6) {
+    area : 3;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "A"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : positive_unate;
+        cell_rise (scalar) { values ("6"); } cell_fall (scalar) { values ("6"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+  cell (RMAP_BUF8) {
+    area : 3;
+    pin (A) { direction : input; capacitance : 1;
+    }
+    pin (Y) { direction : output; function : "A"; max_capacitance : 100000;
+      timing () { related_pin : "A"; timing_type : combinational; timing_sense : positive_unate;
+        cell_rise (scalar) { values ("8"); } cell_fall (scalar) { values ("8"); }
+        rise_transition (scalar) { values ("0"); } fall_transition (scalar) { values ("0"); }
+      }
+    }
+  }
+}

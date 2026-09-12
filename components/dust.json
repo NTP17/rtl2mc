@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "id": "dust",
+  "technology": "java-1.21.1-vanilla",
+  "kind": "primitive",
+  "blocks": ["minecraft:redstone_wire"],
+  "ports": [{"name": "neighbors", "domain": "power_level", "direction": "inout", "location": "Connections depend on neighboring blocks and wire shape."}],
+  "state": ["power", "north/east/south/west connection states", "relevant neighbor state and update context"],
+  "behavior": {
+    "description": "Describe the connected dust network and its power levels, including sources and attenuation.",
+    "limitations": ["The first fixture covers a straight horizontal line only.", "Junctions, slopes, conduction through blocks, feedback, and update order remain uncharacterized."]
+  },
+  "timing": {"unit": "game_tick", "arcs": [], "uncharacterized": ["Within-tick update order", "Direction/position effects", "Network transitions"]},
+  "physical": {"description": "Requires a supporting surface and a connection-aware neighborhood model.", "verified_transforms": []},
+  "evidence": {
+    "status": "draft",
+    "sources": ["https://www.minecraft.net/en-us/article/nether-update-java", "https://www.minecraft.net/en-us/article/minecraft-snapshot-24w33a"],
+    "fixtures": ["dust_line"],
+    "measurements": []
+  },
+  "mapping_eligible": false
+}
+

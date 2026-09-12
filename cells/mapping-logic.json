@@ -1,0 +1,1122 @@
+{
+  "admission": "characterizations/mapping-cells-v1.json",
+  "cells": [
+    {
+      "blocks": [
+        {
+          "position": [
+            -8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -7,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -6,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -5,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -4,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -3,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "state": "repeater[facing=west,delay=1]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -1
+          ],
+          "state": "redstone_block"
+        },
+        {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "state": "comparator[facing=north,mode=subtract]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "state": "repeater[facing=north,delay=1]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "state": "repeater[facing=east,delay=1]"
+        },
+        {
+          "position": [
+            2,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            3,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            4,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            5,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            6,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            7,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        }
+      ],
+      "delay_game_ticks": 8,
+      "function": "!(A | B)",
+      "kind": "NOR2",
+      "name": "RMAP_NOR2",
+      "ports": {
+        "A": {
+          "access_direction": "south",
+          "direction": "input",
+          "position": [
+            -8,
+            0,
+            4
+          ]
+        },
+        "B": {
+          "access_direction": "south",
+          "direction": "input",
+          "position": [
+            8,
+            0,
+            4
+          ]
+        },
+        "Y": {
+          "access_direction": "south",
+          "direction": "output",
+          "position": [
+            0,
+            0,
+            4
+          ]
+        }
+      },
+      "support": "rigid stone under every body block; preserve generated guard air"
+    },
+    {
+      "blocks": [
+        {
+          "position": [
+            -8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -7,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -6,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -5,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -4,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -3,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            0
+          ],
+          "state": "repeater[facing=west,delay=1]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -1
+          ],
+          "state": "redstone_block"
+        },
+        {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "state": "comparator[facing=north,mode=subtract]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "state": "repeater[facing=north,delay=1]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            1,
+            0,
+            0
+          ],
+          "state": "repeater[facing=east,delay=1]"
+        },
+        {
+          "position": [
+            2,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            3,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            4,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            5,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            6,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            7,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        }
+      ],
+      "delay_game_ticks": 8,
+      "function": "!A",
+      "kind": "INV",
+      "name": "RMAP_INV",
+      "ports": {
+        "A": {
+          "access_direction": "south",
+          "direction": "input",
+          "position": [
+            -8,
+            0,
+            4
+          ]
+        },
+        "Y": {
+          "access_direction": "south",
+          "direction": "output",
+          "position": [
+            0,
+            0,
+            4
+          ]
+        }
+      },
+      "support": "rigid stone under every body block; preserve generated guard air"
+    },
+    {
+      "blocks": [
+        {
+          "position": [
+            -8,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            -3
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            -2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            -1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            -8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -7,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -6,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -5,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -4,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -3,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -2,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            -7
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            -6
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            -5
+          ],
+          "state": "repeater[facing=north,delay=1]"
+        },
+        {
+          "position": [
+            -1,
+            0,
+            -4
+          ],
+          "state": "repeater[facing=west,delay=2]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            -1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "state": "repeater[facing=north,delay=1]"
+        },
+        {
+          "position": [
+            0,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            1,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            1,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            1,
+            0,
+            -2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            2,
+            0,
+            -6
+          ],
+          "state": "redstone_block"
+        },
+        {
+          "position": [
+            2,
+            0,
+            -5
+          ],
+          "state": "comparator[facing=north,mode=subtract]"
+        },
+        {
+          "position": [
+            2,
+            0,
+            -4
+          ],
+          "state": "repeater[facing=west,delay=1]"
+        },
+        {
+          "position": [
+            2,
+            0,
+            -2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            3,
+            0,
+            -8
+          ],
+          "state": "repeater[facing=east,delay=1]"
+        },
+        {
+          "position": [
+            3,
+            0,
+            -5
+          ],
+          "state": "repeater[facing=east,delay=2]"
+        },
+        {
+          "position": [
+            3,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            3,
+            0,
+            -3
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            3,
+            0,
+            -2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            4,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            4,
+            0,
+            -5
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            5,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            5,
+            0,
+            -5
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            6,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            6,
+            0,
+            -5
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            7,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            7,
+            0,
+            -5
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -8
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -7
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -6
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -5
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -4
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -3
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -2
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            8,
+            0,
+            -1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            0
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            1
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            2
+          ],
+          "state": "redstone_wire"
+        },
+        {
+          "position": [
+            8,
+            0,
+            3
+          ],
+          "state": "repeater[facing=south,delay=1]"
+        },
+        {
+          "position": [
+            8,
+            0,
+            4
+          ],
+          "state": "redstone_wire"
+        }
+      ],
+      "delay_game_ticks": 14,
+      "function": "Q captures D on rising CLK",
+      "kind": "DFF",
+      "name": "RMAP_DFF",
+      "ports": {
+        "CLK": {
+          "access_direction": "south",
+          "direction": "input",
+          "position": [
+            8,
+            0,
+            4
+          ]
+        },
+        "D": {
+          "access_direction": "south",
+          "direction": "input",
+          "position": [
+            -8,
+            0,
+            4
+          ]
+        },
+        "Q": {
+          "access_direction": "south",
+          "direction": "output",
+          "position": [
+            0,
+            0,
+            4
+          ]
+        }
+      },
+      "support": "rigid stone under every body block; preserve generated guard air"
+    }
+  ],
+  "id": "mapping_logic_v1",
+  "protocol_reference": "docs/rtl-mapping.md",
+  "route_buffers": [
+    {
+      "delay_game_ticks": 2,
+      "name": "RMAP_BUF2",
+      "repeater_setting": 1
+    },
+    {
+      "delay_game_ticks": 4,
+      "name": "RMAP_BUF4",
+      "repeater_setting": 2
+    },
+    {
+      "delay_game_ticks": 6,
+      "name": "RMAP_BUF6",
+      "repeater_setting": 3
+    },
+    {
+      "delay_game_ticks": 8,
+      "name": "RMAP_BUF8",
+      "repeater_setting": 4
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Supported binary synchronous mapping; a new routed design requires its own qualification",
+  "technology": "java-1.21.1-vanilla",
+  "units": "1 simulation ns = 1 game tick"
+}

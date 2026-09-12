@@ -1,0 +1,83 @@
+/* Abstract redstone timing: 1 ns in this file means 1 game tick.
+   No physical voltage, capacitance, slew, power, or PVT characterization.
+   Explicit instances only; honor the native layout and input protocol. */
+library (java_1_21_1_guarded_buffers) {
+  delay_model : table_lookup;
+  time_unit : "1ns";
+  cell (RSBUF2) {
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      min_pulse_width_high : 3;
+      min_pulse_width_low : 3;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("2"); }
+        cell_fall (scalar) { values ("2"); }
+      }
+    }
+  }
+  cell (RSBUF4) {
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      min_pulse_width_high : 5;
+      min_pulse_width_low : 5;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("4"); }
+        cell_fall (scalar) { values ("4"); }
+      }
+    }
+  }
+  cell (RSBUF6) {
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      min_pulse_width_high : 7;
+      min_pulse_width_low : 7;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("6"); }
+        cell_fall (scalar) { values ("6"); }
+      }
+    }
+  }
+  cell (RSBUF8) {
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      min_pulse_width_high : 9;
+      min_pulse_width_low : 9;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("8"); }
+        cell_fall (scalar) { values ("8"); }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+// Must be used with RNET_SDF_ONLY: default path AND width limits are zero.
+(DELAYFILE (SDFVERSION "3.0") (DESIGN "network_tb") (DIVIDER /) (TIMESCALE 1ns)
+  (CELL (CELLTYPE "RNETBUF8") (INSTANCE dut)
+    (DELAY (ABSOLUTE (IOPATH A Y (8:8:8) (8:8:8))))
+    (TIMINGCHECK (WIDTH (posedge A) (9:9:9)) (WIDTH (negedge A) (9:9:9)))
+  )
+)

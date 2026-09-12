@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "library": "java_1_21_1_guarded_buffers_v1",
+  "admission": {
+    "path": "characterizations/repeater-cells-v1.json",
+    "content_sha256": "bd0497920b0dcfc9bd31c787fb498067a6211be61a76eacba1cc9199e7e08e54"
+  },
+  "time_scale": {
+    "canonical_unit": "game_tick",
+    "export_unit": "1ns",
+    "game_ticks_per_export_unit": 1,
+    "meaning": "abstract simulation scale; never elapsed wall-clock nanoseconds"
+  },
+  "generator_sha256": "6d5e355ec61852ce26410033a3c264aae7c400c52516a0b34c0d76882b6d67ce",
+  "files": {
+    "views/repeater-buffers/repeater-buffers.lib": "aa695c917e41d0886864058e5c7933cc41eb1a1f25edabdaa06532d0b592642d",
+    "views/repeater-buffers/repeater-buffers.sv": "b7bd0d9a27cf20ecd53e874ab68ce971a6f93cb787db68e2f8f5f72c4161f72c",
+    "views/repeater-buffers/repeater-buffers-functional.v": "cbe132dafeda824c7ce82cac4b1b1ee63c47c119fbfcbc74c186cf15561358fa",
+    "views/repeater-buffers/buffer-bank.v": "326eef9597fdc8142988fc9ac8c89e45e0db8c7ab26d8d48d028d2d30c809583",
+    "views/repeater-buffers/buffer-bank.sdf": "a7a85bc748fbd1b052141c8d2f35dff3b2428dd50c1a6b6817911e432e7e0227",
+    "views/repeater-buffers/layouts/RSBUF2_r0.mcfunction": "8532629727a154e50d9e68ede83c32c9dae36862be35368f43c7fa6b6bf0018a",
+    "views/repeater-buffers/layouts/RSBUF2_r1.mcfunction": "72304be8cbf998cbad3b2d810e7c3cb2064e6c5d832d8bac463641b67605f49f",
+    "views/repeater-buffers/layouts/RSBUF2_r2.mcfunction": "15068bb67226984ebb3ddaa8dc36c0906c41c738ea2dba6a1490c1a0ea0cdd28",
+    "views/repeater-buffers/layouts/RSBUF2_r3.mcfunction": "9bfae28bf4d274dfd8a83b2f4a985b1ec4cc971620003ce8e7d47479b3b4fd03",
+    "views/repeater-buffers/layouts/RSBUF4_r0.mcfunction": "4eea6905e2e6116cf25a86f68228fbd34de8ec8f4063804d2a715c5c768375dd",
+    "views/repeater-buffers/layouts/RSBUF4_r1.mcfunction": "7ea29a6d53bff49962e199d13fbd98cc47fdccf13176e422de1cf3b69ef70a34",
+    "views/repeater-buffers/layouts/RSBUF4_r2.mcfunction": "63609e08adf9f8822717723c9a930bee2276c886b8cc6ed28ce372c47c835349",
+    "views/repeater-buffers/layouts/RSBUF4_r3.mcfunction": "92ac9b31997d8bea091db932dea918a20f87d01c4081dde78436ea364e18f981",
+    "views/repeater-buffers/layouts/RSBUF6_r0.mcfunction": "7f40ad343c5516cac81cf3494f4ad42477de8d2ee8dda7730344c0fea33ded87",
+    "views/repeater-buffers/layouts/RSBUF6_r1.mcfunction": "1ed445376585ccb302b95f038de8caa941d133947e17057392eb96e8fdbbb415",
+    "views/repeater-buffers/layouts/RSBUF6_r2.mcfunction": "0909ce8384051edda659add663220375269d2129554a30b060b9037c450770e0",
+    "views/repeater-buffers/layouts/RSBUF6_r3.mcfunction": "2cda3ec964a1148b4c4d2675bafcfa04d2027c127dd7fec92c91f18189c4473b",
+    "views/repeater-buffers/layouts/RSBUF8_r0.mcfunction": "92075cf50c798548a35ec539134c59956fcd83d505209b77286dd9a6589f8372",
+    "views/repeater-buffers/layouts/RSBUF8_r1.mcfunction": "e736fa2ab3572b6a7ab955a9ed391bf923101edc1e87d81bbf4f4faa66e33593",
+    "views/repeater-buffers/layouts/RSBUF8_r2.mcfunction": "48c6ef3813a597a34da05a0ed557eba9a6aec78999e44c217a215bf58ee0e176",
+    "views/repeater-buffers/layouts/RSBUF8_r3.mcfunction": "f0d39490b5bf3fd16b1f120f472cd1180bf8bcd3d88de2fae7d3f9495a816021"
+  },
+  "notes": [
+    "Liberty is a logical timing interchange view, not an electrical or full STA library",
+    "Scalar rise/fall delays have no characterized slew, capacitance, fanout, or PVT dependence",
+    "Equal min/typ/max values describe one deterministic game build, not three corners",
+    "SDF instances match buffer-bank.v; no route/interconnect delays are admitted",
+    "Minimum pulse widths do not encode geometry, initialization, or all stimulus restrictions"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "cell_protocol": {
+    "DFF": {
+      "clock_high_low_minimum": 17,
+      "clock_to_q": 14,
+      "hold": 3,
+      "initialization": "clock desired state through the cell; passive settling is insufficient",
+      "setup": 11
+    },
+    "NOR2_INV": {
+      "delay": 8,
+      "input_high_strengths": [
+        1,
+        8,
+        15
+      ],
+      "minimum_measured_dwell": 9
+    }
+  },
+  "coverage": {
+    "cases": 228,
+    "independent_port_comparisons": 50132,
+    "logic_and_register_cases": 196,
+    "route_cases": 32
+  },
+  "evidence": {
+    "case_count": 228,
+    "harness_sha256": {
+      "__init__.py": "83ac655e9b9150ebc6b9316fcc678e29b5780e2cdb5346e5c3d469b3b5553e18",
+      "cell_fixtures.py": "f721147b4303fe66dd9a583a5d08855fb7309aa741a809b099bbd5b9bedbf136",
+      "cell_views.py": "6d5e355ec61852ce26410033a3c264aae7c400c52516a0b34c0d76882b6d67ce",
+      "cells.py": "43035eb7c306b74ee632878827fd2fc8f663329b518ad999bc7657e34126445a",
+      "characterize.py": "6dbb0416579c01417dfc289c6ed735f42b15a526617f45a7e4e1f20f0fcfbe37",
+      "characterize_broad.py": "d12af1328d5b997921f92de9a335b1d71649f6b09ee69ea53ed9b6d2dd0a25f5",
+      "cli.py": "195f6815d9880ae3bc7324f2e1ecb0acd226d0d1224f520fa0d3a0686a07c0a6",
+      "connection_fixtures.py": "a92bfc9d742d8dda2ebc0c26bd44c40598a1304641c22fa0c4700f721b3be798",
+      "connection_views.py": "a123868efe3f421f89f3288658e6455bcc223d609c31215d4557199c92ff8c44",
+      "connections.py": "6b18dc530a7a2920ac64ff8855c75a0493cd9d6b89c0bd7ad94ccccf808cc82f",
+      "engine_trace.py": "0bcd91cda609335ecbb06ae0cb5aae5053bf8528e8056ce4ca450af3a5b7b12b",
+      "event_model.py": "76ef859d14694730c73ff7c73b29ff9a5daff1f215cc3098932d1e4949bb9243",
+      "fixtures.py": "b1745439d0bbaaa259640203db93549c627b603d733b0d70ba8104e0016c5b70",
+      "lab.py": "90b38f9f7a6c498e5208f76da96e5793061192a583e9fc07e402f78c69eb3924",
+      "logic_cells.py": "177442c1a001dda0326b90e020dd0fc39fff781f8bcd36281c4813ed451880be",
+      "logic_fixtures.py": "1979e22c85bf236b7990f707d257f5ec5b89a55dc9bef3e5a69235b9f23cd349",
+      "model_validation.py": "1922393d058950d7e6e94d927bcef2111679cf8ac28a415e8a5320d97e7125d2",
+      "project.py": "04a35761a29948373c5c07ce9dae8c337374d916bbc3e388d3fd8c70b52b3aaf",
+      "rcon.py": "d8a334f8577b230fc9d27cc199cba8b0ba2a73c0819b79a7d9ab90925414cd54",
+      "repeater_broad_fixtures.py": "a024defb19a35614f133f6934ca58563fe2ca160ab686e6c6f6eb903b424e09d",
+      "repeater_fixtures.py": "f8cf19802e511c2b51b021f06834d382216d080bcae1c63d682cacc058130b66",
+      "results.py": "66edf155c69470ece338bcc03f9bb9ad96d407a178cd091b635668b61e30ddc7",
+      "route_fixtures.py": "62a318e735f92f7d27f4e857acc86485aa355ec71647888039ed2904c6019c89",
+      "trace_analysis.py": "8d15ac6982812ef154b8edce9f7349664e75bb3452c224ec69a6c237a0af443d",
+      "waveforms.py": "f336e937304e4efb3609c2d140c2ffc966ebed2733c902ebb257813b092f1390"
+    },
+    "run": "results/20260911T042843Z-ceb687",
+    "sample_count": 19900,
+    "sha256": {
+      "commands.jsonl": "9e1ce2f042a032ec26e0239d5e53b6c57a4c362f33d300aee27deab293d79490",
+      "compiled-functions.json": "9534504f40546e64e64ba8fb09de0ed674faa52a7241564d327005c6dcd9078d",
+      "fixtures.json": "63785ed8dc310a5a05e4321ad8a06b9e154509a5522d03c42e61b3930498dc83",
+      "metadata.json": "9a50feb01cb392f8bd1d28694c0324f7046fad7b82c16fe1db652ec184c2da1b",
+      "observations.jsonl": "6ed7fcc5d72c3e3c724e2ed9c9a4eeb77d161bbecdf4df35c0b7611692a4f41d",
+      "summary.json": "c00a793a906a0c11f9d5e3b5e9c98ee476c6a5fbfce47391c6bd1835c2efc14e"
+    },
+    "started_at_utc": "2026-09-11T04:28:43.738539+00:00"
+  },
+  "id": "mapping_cells_v1",
+  "implementation_sha256": {
+    "redstone_pdk/logic_cells.py": "177442c1a001dda0326b90e020dd0fc39fff781f8bcd36281c4813ed451880be",
+    "redstone_pdk/logic_fixtures.py": "1979e22c85bf236b7990f707d257f5ec5b89a55dc9bef3e5a69235b9f23cd349",
+    "redstone_pdk/route_fixtures.py": "62a318e735f92f7d27f4e857acc86485aa355ec71647888039ed2904c6019c89"
+  },
+  "limits": [
+    "No general event model for comparator/glitch behavior is claimed",
+    "Routing motifs are compositional evidence, not exhaustive validation of arbitrary layouts",
+    "Use only the generated static geometry, rigid support and reserved air; all chunks loaded"
+  ],
+  "schema_version": 1,
+  "status": "measured cells and route motifs; generated designs require their own qualification",
+  "technology": "java-1.21.1-vanilla"
+}

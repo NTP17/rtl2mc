@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "id": "repeater",
+  "technology": "java-1.21.1-vanilla",
+  "kind": "primitive",
+  "blocks": [
+    "minecraft:repeater"
+  ],
+  "ports": [
+    {
+      "name": "rear",
+      "domain": "power_level",
+      "direction": "input",
+      "location": "Rear horizontal face."
+    },
+    {
+      "name": "lock",
+      "domain": "block_power",
+      "direction": "input",
+      "location": "Eligible side inputs; not equivalent to arbitrary powered side neighbors."
+    },
+    {
+      "name": "front",
+      "domain": "power_level",
+      "direction": "output",
+      "location": "Front horizontal face."
+    }
+  ],
+  "state": [
+    "delay setting 1..4",
+    "facing",
+    "powered",
+    "locked",
+    "pending scheduled tick"
+  ],
+  "behavior": {
+    "description": "Directional signal regeneration with configurable delay and physical side locking. A native event model reproduces all 772 measured repeater fixtures and the recorded scheduled events in 96 lock-sequence fixtures.",
+    "limitations": [
+      "Only static blocks in one horizontal layer on rigid support, with every represented chunk loaded and no scheduled-tick backlog.",
+      "Dust runs are straight and have at most one driver; each driver may affect at most one timing-sensitive receiving diode. Junctions, multiple drivers, independent fanout ties, and feedback are rejected.",
+      "Dust strength is resolved synchronously at each command or diode update. Intermediate dust update order, strong/weak powering through solids, vertical wiring, and chunk lifecycle are not modeled.",
+      "Comparator helpers are restricted to compare mode, binary rear input, and no side inputs. This is not a complete comparator primitive model.",
+      "Only fixed source positions may change during simulation. Moving blocks, parameter changes, forced power/lock properties, and unsupported block types are rejected.",
+      "All 772 measured repeater fixtures match at sampled boundaries; internal scheduled-event behavior is directly checked only for the 96 recorded lock-sequence fixtures.",
+      "Primitive model validation does not admit arbitrary cells or timing arcs. The separate guarded-buffer admission is documented in docs/repeater-cells.md."
+    ]
+  },
+  "timing": {
+    "unit": "game_tick",
+    "arcs": [],
+    "uncharacterized": [
+      "General primitive timing arcs; guarded buffer cells have a separate admission",
+      "Behavior outside the executable model's declared physical and update-order envelope",
+      "Arbitrary histories, composition, lifecycle, and unsupported powering modes"
+    ]
+  },
+  "physical": {
+    "description": "Requires support, explicit rear/front faces, and protection of lock-sensitive sides.",
+    "verified_transforms": []
+  },
+  "evidence": {
+    "status": "draft",
+    "sources": [
+      "https://www.youtube.com/watch?v=-bVemrIfcv4"
+    ],
+    "fixtures": [
+      "repeater_delay_1",
+      "repeater_delay_2",
+      "repeater_delay_3",
+      "repeater_delay_4"
+    ],
+    "measurements": [],
+    "fixture_suites": [
+      "repeater",
+      "repeater_broad"
+    ],
+    "characterizations": [
+      {
+        "path": "characterizations/repeater-java-1.21.1.json",
+        "sha256": "345c60181cf5f61ad9117dcbc49f61ff9880fed2e85affdec0821a0119b63ea8"
+      },
+      {
+        "path": "characterizations/repeater-coverage-v2.json",
+        "sha256": "c86d575fce6966d7a088e962cc32fdaf2c975f9b1342993804e1805f162f067d"
+      }
+    ],
+    "executable_models": [
+      {
+        "path": "models/repeater-event-v1.json",
+        "sha256": "81b1a3892aaad77bcb5c1c6be947fa2d68f08fa385d474d299ebb1724bd07ec3"
+      }
+    ]
+  },
+  "mapping_eligible": false
+}

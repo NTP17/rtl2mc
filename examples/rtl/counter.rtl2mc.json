@@ -1,0 +1,11 @@
+{
+  "top": "counter",
+  "clock": "clk",
+  "initial": {"reset": 1, "enable": 0},
+  "boot": [{"reset": 1, "enable": 0}, {"reset": 1}],
+  "transactions": [
+    {"reset": 0, "enable": 1}, {}, {}, {}, {},
+    {"enable": 0}, {}, {"enable": 1},
+    {"reset": 1}, {"reset": 0}, {}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "asm-9.7.1.jar": {
+    "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+    "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281",
+    "size": 126093
+  },
+  "ecj-3.39.0.jar": {
+    "url": "https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.39.0/ecj-3.39.0.jar",
+    "sha256": "01f5a92ac19bb2b3bf85e295a68f2c73c264369109158b566ce9b490af982948",
+    "size": 3296560
+  }
+}

@@ -1,0 +1,129 @@
+<style>
+  .wave-app {padding:1rem;}
+  .wave-chart {width:100%;display:block;overflow:visible;}
+  .wave-chart text {fill:var(--foreground);font:inherit;}
+  .wave-chart .grid {stroke:var(--border);stroke-width:1;}
+  .wave-chart .observed {stroke:var(--viz-series-1);stroke-width:2;fill:none;}
+  .wave-chart .reference {stroke:var(--viz-series-2);stroke-width:2;stroke-dasharray:5 4;fill:none;}
+  .wave-chart .cursor {stroke:var(--foreground);stroke-width:1;opacity:.55;}
+  .wave-key {display:inline-block;width:1.4rem;vertical-align:middle;margin-inline-end:.4rem;}
+  .wave-key.observed {border-top:2px solid var(--viz-series-1);}
+  .wave-key.reference {border-top:2px dashed var(--viz-series-2);}
+  .wave-id {overflow-wrap:anywhere;}
+  .wave-details {display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;}
+  .wave-details div {display:flex;gap:.35rem;}
+  .wave-details dt {font-weight:500;}
+  .wave-details dd {margin:0;}
+</style>
+<main class="wave-app">
+  <h1>Measured repeater waveforms</h1>
+  <p id="coverage"></p>
+  <div class="viz-controls">
+    <label class="form-label">Experiment family<select class="form-select" id="family"></select></label>
+    <label class="form-label">Measured case<select class="form-select" id="case"></select></label>
+  </div>
+  <div class="viz-row">
+    <button class="btn" id="previous" type="button">Previous case</button>
+    <button class="btn" id="next" type="button">Next case</button>
+    <span id="index" class="tabular-nums"></span>
+    <label class="form-check"><input class="form-check-input" id="reference" type="checkbox" checked><span class="form-check-label">Show reference trace</span></label>
+  </div>
+  <p id="selection" aria-live="polite"></p>
+  <p id="reference-name" class="text-small"></p>
+  <div class="viz-row" aria-label="Trace legend">
+    <span><span class="wave-key observed"></span>Measured</span>
+    <span id="reference-key"><span class="wave-key reference"></span>Reference</span>
+  </div>
+  <svg class="wave-chart" id="chart" role="img" aria-label="Measured signal levels against game ticks"></svg>
+  <label class="form-label" for="tick">Inspect tick <output id="tick-value" class="tabular-nums">0</output> gt</label>
+  <input class="form-range" id="tick" type="range" min="0" max="30" step="1" value="0">
+  <p class="text-small">Values below are after the commands or completed tick. “Pre” marks the baseline before tick-0 stimulus; it is not an elapsed game tick. Events inside a game tick are not traced.</p>
+  <div class="table-responsive"><table class="table table-sm"><thead><tr><th>Probe</th><th class="text-end">Measured</th><th class="text-end">Reference</th></tr></thead><tbody id="values"></tbody></table></div>
+  <p id="events" class="text-small" aria-live="polite"></p>
+  <details><summary>Fixture and scope</summary><p><code class="wave-id" id="fixture"></code></p><dl class="wave-details" id="details"></dl>
+    <p class="text-small">Side names retain their meaning relative to the original fixture after rotation. The native JSON contract and raw run files identify the physical probe coordinates and every observation boundary.</p>
+  </details>
+</main>
+<script>
+(() => {
+  const DATA = __MEASURED_DATA__;
+  const el = id => document.getElementById(id);
+  const familyNames = {pulse_train:'Repeated pulses',spatial:'Orientations and positions',strength:'Input strength',lock_sequence:'Lock timing',command_order:'Command order'};
+  const signalNames = {input:'Rear power',powered:'Output Q',locked:'Lock',out:'Front power',north_input:'N rear power',south_input:'S rear power',north_powered:'N driver Q',south_powered:'S driver Q'};
+  const order = ['input','powered','locked','out','north_input','north_powered','south_input','south_powered'];
+  let selected, filtered = [], reference, geometry;
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const make = (tag, attrs={}, text) => { const n=document.createElementNS(svgNS,tag);Object.entries(attrs).forEach(([k,v])=>n.setAttribute(k,v));if(text!==undefined)n.textContent=text;return n; };
+  function valueAt(signal,tick) { if(!signal)return null;let value=signal.initial;for(const edge of signal.edges){if(edge[0]>tick)break;value=edge[1];}return value; }
+  function options(select, entries) {select.replaceChildren(...entries.map(([value,text])=>{const option=document.createElement('option');option.value=value;option.textContent=text;return option;}));}
+  const families = Object.keys(familyNames).filter(f=>DATA.cases.some(c=>c.family===f));
+  options(el('family'),families.map(f=>[f,`${familyNames[f]} (${DATA.cases.filter(c=>c.family===f).length})`]));
+  el('coverage').textContent=`${DATA.cases.length} new measured cases · ${DATA.technology} · delays in game ticks. Traces show sampled Minecraft behavior.`;
+  function filterCases() {
+    filtered=DATA.cases.filter(c=>c.family===el('family').value);
+    options(el('case'),filtered.map(c=>[c.id,c.label]));
+    const useful=filtered.find(c=>c.family==='pulse_train' && c.details['delay setting']===4 && c.details['active value']===1 && c.details.pattern==='rapid');
+    if(useful)el('case').value=useful.id;
+    choose();
+  }
+  function choose() {
+    selected=filtered.find(c=>c.id===el('case').value);reference=DATA.references[selected.reference]||DATA.cases.find(c=>c.id===selected.reference);
+    el('reference').disabled=!reference;
+    el('reference-key').hidden=!reference || !el('reference').checked;
+    const index=filtered.indexOf(selected);el('index').textContent=`${index+1} / ${filtered.length}`;
+    el('previous').disabled=index===0;el('next').disabled=index===filtered.length-1;
+    el('selection').textContent=selected.label+(reference ? (selected.match===true ? ' · Matches reference sampled trace' : selected.match===false ? ' · Differs from reference sampled trace' : ' · Reference comparison pending') : '');
+    el('reference-name').textContent=reference?'Reference: '+reference.label:'';
+    el('fixture').textContent=selected.id;
+    el('details').replaceChildren(...Object.entries(selected.details).map(([key,value])=>{const wrap=document.createElement('div');const term=document.createElement('dt');term.textContent=key+':';const desc=document.createElement('dd');desc.textContent=Array.isArray(value)?value.join(', '):String(value);wrap.append(term,desc);return wrap;}));
+    el('tick').max=selected.duration;el('tick').value=Math.min(Number(el('tick').value),selected.duration);
+    draw();
+  }
+  function pathFor(signal,top,x,max) {
+    const y=value=>top+33-26*value/max;
+    let path=`M ${x(-1)} ${y(signal.initial)} L ${x(0)} ${y(signal.initial)}`;
+    for(const [tick,value] of signal.edges)path+=` H ${x(tick)} V ${y(value)}`;
+    return path+` H ${x(selected.duration)}`;
+  }
+  function draw() {
+    if(!selected)return;
+    const svg=el('chart'), width=Math.max(200,svg.getBoundingClientRect().width), left=width<420?95:125, right=18;
+    const names=order.filter(name=>selected.signals[name]);
+    const span=width-left-right, x=tick=>tick<0?left-25:left+span*tick/selected.duration;
+    const height=names.length*49+55;
+    svg.setAttribute('width',width);svg.setAttribute('height',height);svg.setAttribute('viewBox',`0 0 ${width} ${height}`);
+    svg.replaceChildren(make('title',{},selected.label),make('desc',{},'Signals share a game-tick axis. The table below reports exact values at the selected tick.'));
+    const raw=selected.duration/(width<420?3:6), step=[1,2,5,10,20,50,100].find(v=>v>=raw)||100;
+    const ticks=[0];for(let t=step;t<selected.duration;t+=step)ticks.push(t);if(selected.duration-ticks[ticks.length-1]>=step*.65)ticks.push(selected.duration);
+    for(const tick of ticks){svg.append(make('line',{x1:x(tick),x2:x(tick),y1:24,y2:height-30,class:'grid'}),make('text',{x:x(tick),y:16,'text-anchor':'middle',class:'text-small'},tick));}
+    svg.append(make('text',{x:x(-1),y:16,'text-anchor':'middle',class:'text-small'},'Pre'));
+    names.forEach((name,index)=>{
+      const top=25+49*index, max=(name==='powered'||name==='locked'||name.endsWith('_powered'))?1:15;
+      svg.append(make('text',{x:0,y:top+22,class:'text-small'},signalNames[name]||name));
+      svg.append(make('line',{x1:x(-1),x2:x(selected.duration),y1:top+33,y2:top+33,class:'grid'}));
+      svg.append(make('path',{d:pathFor(selected.signals[name],top,x,max),class:'observed'}));
+      if(reference && el('reference').checked && reference.signals[name])svg.append(make('path',{d:pathFor(reference.signals[name],top,x,max),class:'reference'}));
+    });
+    svg.append(make('text',{x:left+span/2,y:height-4,'text-anchor':'middle',class:'text-small'},'Game ticks'));
+    const cursor=make('line',{class:'cursor',y1:24,y2:height-30});svg.append(cursor);geometry={x,cursor,names};inspect();
+  }
+  function inspect() {
+    if(!selected||!geometry)return;
+    const tick=Number(el('tick').value);el('tick-value').textContent=tick;
+    geometry.cursor.setAttribute('x1',geometry.x(tick));geometry.cursor.setAttribute('x2',geometry.x(tick));
+    el('values').replaceChildren(...geometry.names.map(name=>{
+      const row=document.createElement('tr');
+      [signalNames[name]||name,valueAt(selected.signals[name],tick),reference?valueAt(reference.signals[name],tick):'—'].forEach((value,index)=>{const cell=document.createElement(index===0?'th':'td');cell.textContent=value??'—';if(index)cell.className='text-end';row.append(cell);});return row;
+    }));
+    const changes=geometry.names.flatMap(name=>selected.signals[name].edges.filter(edge=>edge[0]===tick).map(edge=>`${signalNames[name]||name} → ${edge[1]} (${edge[2]==='before_action'?'before command':'after command or completed tick'})`));
+    el('events').textContent=changes.length?changes.join('; '):'No sampled transition at this tick.';
+  }
+  el('family').addEventListener('change',filterCases);el('case').addEventListener('change',choose);
+  el('previous').addEventListener('click',()=>{el('case').value=filtered[filtered.indexOf(selected)-1].id;choose();});
+  el('next').addEventListener('click',()=>{el('case').value=filtered[filtered.indexOf(selected)+1].id;choose();});
+  el('reference').addEventListener('change',()=>{el('reference-key').hidden=!reference||!el('reference').checked;draw();});
+  el('tick').addEventListener('input',inspect);
+  new ResizeObserver(draw).observe(el('chart'));
+  filterCases();
+})();
+</script>

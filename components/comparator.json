@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "id": "comparator",
+  "technology": "java-1.21.1-vanilla",
+  "kind": "primitive",
+  "blocks": ["minecraft:comparator"],
+  "ports": [
+    {"name": "rear", "domain": "power_level", "direction": "input", "location": "Rear horizontal face."},
+    {"name": "sides", "domain": "power_level", "direction": "input", "location": "Left and right horizontal faces."},
+    {"name": "readout", "domain": "state", "direction": "input", "location": "Applicable rear block/entity readout, including contextual rules."},
+    {"name": "front", "domain": "power_level", "direction": "output", "location": "Front horizontal face."}
+  ],
+  "state": ["compare/subtract mode", "facing", "powered", "block entity output signal", "pending scheduled tick"],
+  "behavior": {
+    "description": "For direct power inputs, compare mode passes rear R when R >= max(L,S), otherwise zero; subtract mode computes max(R-max(L,S),0). Block readout precedence is a separate contract.",
+    "limitations": ["Fixtures sample rear=12 with side=0, 8, or 15 in one orientation.", "Equal inputs, two active sides, all input levels, readout precedence, and pulse timing remain pending."]
+  },
+  "timing": {"unit": "game_tick", "arcs": [], "uncharacterized": ["All input-dependent transitions", "Pulse response", "Readout update triggers", "Event priority"]},
+  "physical": {"description": "Requires support and distinct rear/side/front geometry; readable block reach must be modeled explicitly.", "verified_transforms": []},
+  "evidence": {
+    "status": "draft",
+    "sources": ["https://www.minecraft.net/en-us/article/taking-inventory--redstone-comparator"],
+    "fixtures": ["comparator_compare_side_8", "comparator_compare_side_15", "comparator_subtract_side_8", "comparator_subtract_side_15"],
+    "measurements": []
+  },
+  "mapping_eligible": false
+}
+

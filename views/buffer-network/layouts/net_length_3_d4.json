@@ -1,0 +1,180 @@
+{
+  "fixture": "net_length_3_d4",
+  "graph": {
+    "nodes": [
+      {
+        "id": "n0",
+        "position": [
+          24,
+          80,
+          16
+        ],
+        "kind": "repeater",
+        "facing": "west",
+        "delay": 2,
+        "parent": "source",
+        "input_high_strength": 15,
+        "arrival_delay": 2,
+        "live": true
+      },
+      {
+        "id": "n1",
+        "position": [
+          28,
+          80,
+          16
+        ],
+        "kind": "repeater",
+        "facing": "west",
+        "delay": 8,
+        "parent": "n0",
+        "input_high_strength": 13,
+        "arrival_delay": 10,
+        "live": true
+      },
+      {
+        "id": "n2",
+        "position": [
+          31,
+          80,
+          16
+        ],
+        "kind": "repeater",
+        "facing": "west",
+        "delay": 2,
+        "parent": "n1",
+        "input_high_strength": 14,
+        "arrival_delay": 12,
+        "live": true
+      }
+    ],
+    "nets": [
+      {
+        "driver": "source",
+        "wires": [
+          {
+            "position": [
+              23,
+              80,
+              16
+            ],
+            "high_strength": 15
+          }
+        ],
+        "sinks": [
+          "n0"
+        ]
+      },
+      {
+        "driver": "n0",
+        "wires": [
+          {
+            "position": [
+              25,
+              80,
+              16
+            ],
+            "high_strength": 15
+          },
+          {
+            "position": [
+              26,
+              80,
+              16
+            ],
+            "high_strength": 14
+          },
+          {
+            "position": [
+              27,
+              80,
+              16
+            ],
+            "high_strength": 13
+          }
+        ],
+        "sinks": [
+          "n1"
+        ]
+      },
+      {
+        "driver": "n1",
+        "wires": [
+          {
+            "position": [
+              29,
+              80,
+              16
+            ],
+            "high_strength": 15
+          },
+          {
+            "position": [
+              30,
+              80,
+              16
+            ],
+            "high_strength": 14
+          }
+        ],
+        "sinks": [
+          "n2"
+        ]
+      },
+      {
+        "driver": "n2",
+        "wires": [
+          {
+            "position": [
+              32,
+              80,
+              16
+            ],
+            "high_strength": 15
+          }
+        ],
+        "sinks": []
+      }
+    ],
+    "source": [
+      22,
+      80,
+      16
+    ],
+    "initial": 1,
+    "transitions": [
+      [
+        0,
+        0
+      ],
+      [
+        9,
+        1
+      ],
+      [
+        18,
+        0
+      ],
+      [
+        27,
+        1
+      ]
+    ],
+    "minimum_dwell": 9,
+    "initial_settle": 32,
+    "reserved_box": {
+      "min": [
+        0,
+        79,
+        -16
+      ],
+      "max": [
+        63,
+        84,
+        47
+      ]
+    }
+  },
+  "contract": "connections/buffer-network-v1.json",
+  "contract_content_sha256": "caf8b0dda6541e6124c414f8df6d779e3bc5d878abd37e9a405e0112c4d47eed"
+}

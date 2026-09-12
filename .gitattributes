@@ -1,0 +1,48 @@
+# New documentation/configuration uses LF on every checkout.
+* text=auto eol=lf
+* whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Existing model admissions hash exact source/data bytes, including some legacy
+# CRLF artifacts. Preserve recorded bytes even with core.autocrlf=true.
+*.py -text
+*.json -text
+*.sv -text
+*.v -text
+*.sdf -text
+*.sdc -text
+*.lib -text
+*.tcl -text
+*.f -text
+*.ys -text
+*.il -text
+*.mcfunction -text
+*.java -text
+*.txt -text
+*.css -text
+views/** -text
+tests/fixtures/** -text
+docs/repeater-cells.md -text
+
+# Preserve harmless original EOF blank lines in byte-pinned lab files.
+components/comparator.json whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+components/dust.json whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+components/torch.json whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+pdk.py whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+redstone_pdk/__init__.py whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+redstone_pdk/rcon.py whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+technology/java-1.21.1.json whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.jar binary
+*.nbt binary
+*.mca binary
+
+# Canonical generated views remain tracked, but collapse in GitHub reviews.
+views/** linguist-generated=true
+tests/fixtures/** linguist-generated=true

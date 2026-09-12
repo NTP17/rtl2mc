@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "id": "torch",
+  "technology": "java-1.21.1-vanilla",
+  "kind": "primitive",
+  "blocks": ["minecraft:redstone_torch", "minecraft:redstone_wall_torch"],
+  "ports": [
+    {"name": "attachment", "domain": "block_power", "direction": "input", "location": "The block supporting or carrying the torch."},
+    {"name": "neighbors", "domain": "power_level", "direction": "output", "location": "Faces and powering modes require separate characterization."}
+  ],
+  "state": ["lit", "attachment orientation", "recent toggle history", "pending tick/cooldown state"],
+  "behavior": {
+    "description": "Characterize inversion relative to power at the attachment, output powering rules, and burnout/recovery behavior.",
+    "limitations": ["The first fixture tests one standing torch and two input transitions.", "Wall placement, output strength, burnout, recovery, and short pulses are pending."]
+  },
+  "timing": {"unit": "game_tick", "arcs": [], "uncharacterized": ["On/off delay", "Pulse rejection", "Burnout window and recovery", "Within-tick order"]},
+  "physical": {"description": "Standing and wall-mounted layouts have different support and port geometry.", "verified_transforms": []},
+  "evidence": {"status": "draft", "sources": [], "fixtures": ["torch_inversion"], "measurements": []},
+  "mapping_eligible": false
+}
+

@@ -1,0 +1,37 @@
+// 1 ns = 1 game tick. Route delay 0 at completed-tick resolution only.
+(DELAYFILE
+  (SDFVERSION "3.0")
+  (DESIGN "conn_net_chain_4_3_4")
+  (VENDOR "sv2rt")
+  (PROGRAM "checked network exporter")
+  (VERSION "1")
+  (DIVIDER /)
+  (TIMESCALE 1ns)
+  (CELL
+    (CELLTYPE "conn_net_chain_4_3_4")
+    (INSTANCE)
+    (DELAY (ABSOLUTE
+      (INTERCONNECT A n0/A (0:0:0) (0:0:0))
+      (INTERCONNECT n0/Y n1/A (0:0:0) (0:0:0))
+      (INTERCONNECT n1/Y n2/A (0:0:0) (0:0:0))
+    ))
+  )
+  (CELL
+    (CELLTYPE "RNETBUF8")
+    (INSTANCE n0)
+    (DELAY (ABSOLUTE (IOPATH A Y (8:8:8) (8:8:8))))
+    (TIMINGCHECK (WIDTH (posedge A) (9:9:9)) (WIDTH (negedge A) (9:9:9)))
+  )
+  (CELL
+    (CELLTYPE "RNETBUF6")
+    (INSTANCE n1)
+    (DELAY (ABSOLUTE (IOPATH A Y (6:6:6) (6:6:6))))
+    (TIMINGCHECK (WIDTH (posedge A) (7:7:7)) (WIDTH (negedge A) (7:7:7)))
+  )
+  (CELL
+    (CELLTYPE "RNETBUF8")
+    (INSTANCE n2)
+    (DELAY (ABSOLUTE (IOPATH A Y (8:8:8) (8:8:8))))
+    (TIMINGCHECK (WIDTH (posedge A) (9:9:9)) (WIDTH (negedge A) (9:9:9)))
+  )
+)

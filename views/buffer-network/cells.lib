@@ -1,0 +1,118 @@
+/* Logical redstone library; 1 ns means 1 game tick.
+ * area counts diode blocks; excludes routed dust/support/reserved air.
+ * fanout_load counts receiving diodes. No electrical capacitance/slew/PVT.
+ * dont_use prevents unqualified Boolean remapping of physical delay cells. */
+library (java_1_21_1_buffer_network) {
+  time_unit : "1ns";
+  delay_model : table_lookup;
+  cell (RNETBUF2) {
+    area : 1;
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      fanout_load : 1;
+      min_pulse_width_high : 3;
+      min_pulse_width_low : 3;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_fanout : 3;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("2"); }
+        cell_fall (scalar) { values ("2"); }
+      }
+    }
+  }
+  cell (RNETBUF4) {
+    area : 1;
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      fanout_load : 1;
+      min_pulse_width_high : 5;
+      min_pulse_width_low : 5;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_fanout : 3;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("4"); }
+        cell_fall (scalar) { values ("4"); }
+      }
+    }
+  }
+  cell (RNETBUF6) {
+    area : 1;
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      fanout_load : 1;
+      min_pulse_width_high : 7;
+      min_pulse_width_low : 7;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_fanout : 3;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("6"); }
+        cell_fall (scalar) { values ("6"); }
+      }
+    }
+  }
+  cell (RNETBUF8) {
+    area : 1;
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      fanout_load : 1;
+      min_pulse_width_high : 9;
+      min_pulse_width_low : 9;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_fanout : 3;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("8"); }
+        cell_fall (scalar) { values ("8"); }
+      }
+    }
+  }
+  cell (RNETCMP2) {
+    area : 1;
+    dont_use : true;
+    pin (A) {
+      direction : input;
+      fanout_load : 1;
+      min_pulse_width_high : 3;
+      min_pulse_width_low : 3;
+    }
+    pin (Y) {
+      direction : output;
+      function : "A";
+      max_fanout : 3;
+      timing () {
+        related_pin : "A";
+        timing_sense : positive_unate;
+        timing_type : combinational;
+        cell_rise (scalar) { values ("2"); }
+        cell_fall (scalar) { values ("2"); }
+      }
+    }
+  }
+}

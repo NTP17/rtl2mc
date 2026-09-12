@@ -1,0 +1,11 @@
+{
+  "top": "shift2",
+  "clock": "clk",
+  "initial": {"reset": 1, "enable": 0, "serial_in": 0},
+  "boot": [{"reset": 1}, {"reset": 1}],
+  "transactions": [
+    {"reset": 0, "enable": 1, "serial_in": 1}, {"serial_in": 0},
+    {"serial_in": 1}, {}, {"enable": 0, "serial_in": 0}, {},
+    {"enable": 1}, {}, {"reset": 1}, {"reset": 0, "serial_in": 1}
+  ]
+}
