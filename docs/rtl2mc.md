@@ -1,4 +1,4 @@
-# RTL2MC: file list to a Minecraft world
+# RTL2MC: RTL sources to a Minecraft world
 
 RTL2MC snapshots the sources, synthesizes and proves the logic, places and
 routes the physical cells, generates timing views, compares routed simulation
@@ -16,10 +16,11 @@ physical proof or make unrestricted SystemVerilog implementable.
 Python 3.12 or newer is the bootstrap prerequisite. From the project directory:
 
 ```text
-python rtl2mc.py run -f examples/rtl/adder.f
+python rtl2mc.py run examples/rtl/adder.sv
+python rtl2mc.py run examples/rtl/multifile/adder.sv examples/rtl/multifile/half_adder.sv -top adder
 python rtl2mc.py run -f examples/rtl/counter.f --out builds/my-counter
 python rtl2mc.py doctor
-python rtl2mc.py run -f examples/rtl/counter.f --plan
+python rtl2mc.py run examples/rtl/counter.sv --plan
 ```
 
 The Python entry point is shared by Windows and Linux. Windows also has
@@ -27,6 +28,8 @@ The Python entry point is shared by Windows and Linux. Windows also has
 No shell activation is required for tools discovered by the driver.
 
 The default output is a fresh timestamped directory under `builds/rtl2mc`.
+Its name starts with the file-list stem when `-f` is supplied, or the first
+source's stem otherwise.
 An explicit output directory must be new or empty. Existing circuits and worlds
 are never silently overwritten. Failures return nonzero and retain logs.
 `run.json` records success only after simulation, physical checks, clean
@@ -68,6 +71,31 @@ it never authorizes nightly synthesis tools, simulators, or Java runtimes.
 
 ## File lists and sequential initialization
 
+Supply one or more `.sv`/`.v` files as positional arguments to `run`. Direct
+paths are relative to the current working directory and retain their supplied
+order. Quote paths containing spaces. Options may appear before, between or
+after source arguments. The sources are compiled together as one design.
+
+Use `-top MODULE` or `--top MODULE` to select the top module by name. These are
+equivalent and override the `top` field in the project configuration. Without
+either setting, synthesis infers the top when there is exactly one root module;
+ambiguous designs fail with a list of candidates. `--plan` reports the requested
+top, or `null` when it will be inferred during synthesis.
+
+Command-line macros accept `+define+NAME`, `+define+NAME=VALUE`, and multiple
+definitions in one argument, such as `+define+FEATURE+WIDTH=8`. A definition
+without `=VALUE` has value `1`; `+define+NAME=` explicitly defines empty text.
+Repeat the option to add more definitions. Quote an entire argument when its
+value contains spaces. These definitions are recorded in `build/inputs.json`
+and passed to the synthesis, equivalence and source/routed simulation stages.
+
+`-f FILELIST` remains supported and can be combined with direct sources and
+`+define+` arguments. The file list expands first; direct sources and command-line
+definitions are appended in their respective supplied order. Duplicate sources
+are rejected, including duplicates across the two input forms. A file list
+containing only options may accompany direct sources. Include directories and
+other file-list flags are supplied through the file list.
+
 The top-level list is relative to its own directory. Sources retain their listed
 order. Supported entries: `.v`/`.sv` paths, quoted paths with spaces,
 `+incdir+...`, `+define+NAME=VALUE`, `-I`, `-D`, `-sv`, `-sverilog`, nested `-f`/`-F`,
@@ -80,11 +108,16 @@ not accepted.
 
 Source/include trees are copied with SHA256 manifests. Every subsequent tool
 reads those bytes. Limit include roots to HDL directories: snapshots are
-bounded to 4096 files / 64 MiB. The top is inferred when there is one root
-module; otherwise use `--top` or a sibling `<filelist-stem>.rtl2mc.json`.
+bounded to 4096 files / 64 MiB. Direct source inputs use the same snapshot and
+validation path as listed sources; no temporary file list is generated.
+
+With `-f`, the default configuration is its sibling
+`<filelist-stem>.rtl2mc.json`. Otherwise it is the sibling
+`<first-source-stem>.rtl2mc.json` of the first direct source. `--config` overrides
+that choice, which is useful when a shared package or helper is listed first.
 
 Clocked designs also need initialization and test transactions in that config.
-`counter.f` automatically picks up `counter.rtl2mc.json`:
+Both `counter.sv` and `-f counter.f` automatically pick up `counter.rtl2mc.json`:
 
 ```json
 {

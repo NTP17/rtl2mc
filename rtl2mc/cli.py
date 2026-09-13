@@ -9,7 +9,7 @@ import zipfile
 from redstone_pdk.router import route
 from .views import export
 from .common import ROOT, dump, read, sha, write
-from .filelist import parse, snapshot
+from .filelist import parse_sources, snapshot
 from .frontend import synthesize
 from .toolchain import discover, select
 from .verification import vectors, verify
@@ -25,8 +25,8 @@ def confirmation(message, preapproved=False):
     return input(message + " [y/N] ").strip().lower() in ("y", "yes")
 
 
-def config_for(filelist, explicit=None):
-    path = Path(explicit).resolve() if explicit else Path(filelist).with_suffix(".rtl2mc.json")
+def config_for(input_path, explicit=None):
+    path = Path(explicit).resolve() if explicit else Path(input_path).with_suffix(".rtl2mc.json")
     config = read(path) if path.exists() else {}
     allowed = {"top", "clock", "initial", "boot", "transactions", "vectors", "seed"}
     if not isinstance(config, dict) or set(config)-allowed:
@@ -82,9 +82,12 @@ def main(argv=None):
     sub = parser.add_subparsers(dest="command", required=True)
     doctor = sub.add_parser("doctor", help="discover tools without installing or changing system configuration")
     doctor.add_argument("--tool-dir", action="append", default=[])
-    run = sub.add_parser("run", help="file list to routed, tested Minecraft world")
-    run.add_argument("-f", "--filelist", required=True)
-    run.add_argument("--top")
+    run = sub.add_parser("run", help="RTL sources or file list to routed, tested Minecraft world")
+    run.set_defaults(command="run")
+    run.add_argument("sources", nargs="*", metavar="SOURCE",
+                     help=".v/.sv files in compile order and +define+NAME[=VALUE][+NAME...] options")
+    run.add_argument("-f", "--filelist", help="file list expanded before any direct source arguments")
+    run.add_argument("-top", "--top", help="select the RTL top module (otherwise inferred or read from config)")
     run.add_argument("--config")
     run.add_argument("--out")
     run.add_argument("--tool-dir", action="append", default=[])
@@ -98,21 +101,28 @@ def main(argv=None):
     run.add_argument("--plan", action="store_true", help="show resolved sources and tool choices; no synthesis/download/world writes")
     run.add_argument("--install-missing", action="store_true", help="explicit approval to install missing latest stable open-source dependencies portably")
     run.add_argument("--accept-minecraft-eula", action="store_true", help="explicitly accept Minecraft's EULA for this local builder")
-    args = parser.parse_args(argv)
+    argv = list(sys.argv[1:] if argv is None else argv)
+    # The run parser has no subcommands, so it can accept options between sources.
+    args = run.parse_intermixed_args(argv[1:]) if argv[:1] == ["run"] else parser.parse_args(argv)
+    if args.command == "run" and not args.filelist and not args.sources:
+        run.error("provide one or more .v/.sv source files or -f FILELIST")
     output, report = None, None
     try:
         if sys.version_info < (3, 12):
             raise ValueError("RTL2MC requires Python 3.12 or newer")
+        if args.command == "run":
+            inputs = parse_sources(args.sources, args.filelist)
+            input_path = Path(args.filelist or inputs["sources"][0]).resolve()
+            config = config_for(input_path, args.config)
         target = minecraft_target(args.minecraft_version) if args.command == "run" else None
         found, env = discover(args.tool_dir, java_major=target["java_major"] if target else 21)
         if args.command == "doctor":
             print(json.dumps({"tools": found, "selection": select(found), "installation": "latest stable only; confirmation required"}, indent=2))
             return 0
-        inputs = parse(args.filelist)
-        config = config_for(Path(args.filelist).resolve(), args.config)
         selection = select(found, args.synth, args.sim, imported=bool(args.netlist))
         if args.plan:
             print(json.dumps({"inputs": inputs, "config": config, "selection": selection,
+                              "top": args.top or config.get("top"),
                               "minecraft": target,
                               "scope": "bounded binary combinational or single positive-edge clock; physical regression required",
                               "install_policy": "latest upstream stable tools only; consent required; explicit Minecraft snapshots are an opt-in exception"}, indent=2))
@@ -121,7 +131,7 @@ def main(argv=None):
             raise ValueError("--max-cells must be positive")
         found, env, selection = ensure_dependencies(found, env, args, target)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-        output = Path(args.out).resolve() if args.out else ROOT / "builds/rtl2mc" / (Path(args.filelist).stem + "-" + stamp)
+        output = Path(args.out).resolve() if args.out else ROOT / "builds/rtl2mc" / (input_path.stem + "-" + stamp)
         if output.exists() and any(output.iterdir()):
             raise ValueError("Output directory must be new or empty; existing worlds and results are never overwritten")
         output.mkdir(parents=True, exist_ok=True)

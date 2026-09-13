@@ -11,7 +11,7 @@ reference models.
 
 ```mermaid
 flowchart TD
-    RTL[RTL + file list] --> SYN[DC / Genus / Yosys]
+    RTL[RTL sources / file list] --> SYN[DC / Genus / Yosys]
     SYN --> MAP[Redstone placement and routing]
     MAP --> SIM[VCS / Xcelium / Questa / Icarus]
     SIM --> MC[Vanilla Minecraft checks]
@@ -28,9 +28,20 @@ The Python application and offline tests use only the standard library; a
 
 ```sh
 python rtl2mc.py doctor
-python rtl2mc.py run -f examples/rtl/adder.f --synth yosys --sim icarus --plan
+python rtl2mc.py run examples/rtl/adder.sv --synth yosys --sim icarus --plan
 python tools/test.py
 ```
+
+Pass one or more `.sv`/`.v` files directly, or use `-f` with a file list. For
+example, this adder uses two source files and an explicit top module:
+
+```sh
+python rtl2mc.py run examples/rtl/multifile/adder.sv examples/rtl/multifile/half_adder.sv -top adder --synth yosys --sim icarus --plan
+```
+
+`-top` and `--top` are equivalent. Compile-time macros use
+`+define+NAME`, `+define+NAME=VALUE`, or `+define+NAME+WIDTH=8`.
+See the [input and configuration rules](docs/rtl2mc.md).
 
 To build a world, provide Yosys, Icarus (`iverilog` and `vvp`), Java 21 and the
 pinned Minecraft Java 1.21.1 server. RTL2MC can install missing supported open
@@ -41,7 +52,7 @@ After reviewing the [Minecraft EULA](https://aka.ms/MinecraftEULA), use the
 following command if you agree to it and approve the dependency downloads:
 
 ```sh
-python rtl2mc.py run -f examples/rtl/adder.f --synth yosys --sim icarus --minecraft-version 1.21.1 --out builds/adder --install-missing --accept-minecraft-eula
+python rtl2mc.py run examples/rtl/adder.sv --synth yosys --sim icarus --minecraft-version 1.21.1 --out builds/adder --install-missing --accept-minecraft-eula
 ```
 
 An output directory must be new or empty. A successful run prints
@@ -86,6 +97,10 @@ development GameTest ticker enabled.
 | `counter` | Two-bit counter with synchronous reset and enable | [counter.f](examples/rtl/counter.f), [configuration](examples/rtl/counter.rtl2mc.json) |
 | `shift2` | Two-bit serial shift register with reset and enable | [shift2.f](examples/rtl/shift2.f), [configuration](examples/rtl/shift2.rtl2mc.json) |
 
+The [multi-file adder](examples/rtl/multifile/adder.sv) instantiates a
+[half-adder module](examples/rtl/multifile/half_adder.sv) from a second source
+file. It can also be built through its [file list](examples/rtl/multifile/adder.f).
+
 Synthesis and simulation are selected independently:
 
 ```sh
@@ -115,6 +130,71 @@ combinational feedback are outside the supported contract. Physical tests check
 settled outputs and captured/held state. They do not prove unrestricted RTL,
 transient equivalence or every physical state sequence. Icarus lacks native SDF
 timing checks; its flow records that limitation and uses procedural guards.
+
+## Frequently asked questions
+
+### Was AI used to develop RTL2MC?
+
+Yes. OpenAI Codex assisted with implementation, debugging, tests, documentation
+and repository preparation, including running verification workflows. Reported
+EDA and Minecraft results come from executed tools and saved evidence. The
+[validation notes](docs/validation.md) describe the scope of those checks.
+
+### Do I need an AI service or API key to run it?
+
+No. RTL2MC runs Python code, local EDA tools and a Minecraft server. It does not
+call an AI model or require an AI API key. Dependency setup can require network
+access to download tools and server assets.
+
+### Can I use it without commercial EDA tools?
+
+Yes. Select `--synth yosys --sim icarus` for synthesis and simulation. You still
+need a compatible Java runtime and Minecraft server. DC, Genus, VCS, Xcelium
+and Questa are optional backends that require your own installations and
+licenses. See [tool setup](docs/toolchains.md).
+
+### Can it convert any SystemVerilog design?
+
+No. The current flow supports the documented binary combinational and single
+clock subset, with a default limit of 64 mapped logic cells. Clocked designs
+need explicit initialization and test transactions. Check the
+[RTL contract](docs/rtl2mc.md) for supported constructs and configuration.
+
+### How do I choose source files, the top module and compile-time macros?
+
+Use `run top.sv helper.sv -top my_top +define+FEATURE+WIDTH=8`.
+`--top` is an alias for `-top`; both select a module name. You can also use
+`-f sources.f`, with additional source files and `+define+` arguments if needed.
+The default configuration is beside the file list, or beside the first source
+when no file list is supplied; `--config` selects a different configuration.
+
+### Which Minecraft edition and version should I use? Are mods required?
+
+Use Minecraft Java **1.21.1** for the measured baseline and native GameTest.
+Exported worlds use vanilla blocks and datapacks; no client mods are required.
+Bedrock Edition is unsupported. Other selectable Java targets need their own
+successful physical regression, as explained under [supported scope](#supported-scope).
+
+### How is correctness checked?
+
+Successful builds pass source and routed simulation, Minecraft measurements,
+and saved-world reopen checks. The separate GameTest runner uses independent
+reference models for the four included examples; a new design needs its own
+reference model. Passing checks cover the declared test sequences, not every
+physical state or transient waveform. See [testing](docs/testing.md).
+
+### Why does the GameTest negative control report a failed test?
+
+The `--negative-control` option deliberately removes an output wire in a copy
+of the world. A native GameTest assertion must detect that damage. The wrapper
+counts the control as successful only when the expected failure is observed;
+the positive circuit must still pass.
+
+### Do I need the archived laboratory evidence?
+
+No archive is needed for the main CLI or the standalone Python tests. The 15
+additional historical evidence audits require the separately restored lab
+corpus. See the [restoration instructions](docs/testing.md#optional-historical-evidence-audits).
 
 ## Repository map
 

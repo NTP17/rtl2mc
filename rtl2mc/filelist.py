@@ -1,4 +1,4 @@
-"""Explicit, portable file-list dialect and reproducible HDL input snapshots."""
+"""Explicit source arguments, portable file lists and reproducible HDL snapshots."""
 import os
 from pathlib import Path
 import re
@@ -27,7 +27,40 @@ def expand(text, env):
     return re.sub(r"\$\{(\w+)\}|\$(\w+)|%(\w+)%", replace, text)
 
 
-def parse(path, env=None):
+def _add_source(result, path):
+    path = Path(path).resolve()
+    if not path.is_file() or path.suffix.lower() not in (".v", ".sv"):
+        raise ValueError("Expected an existing .v/.sv source: " + str(path))
+    if str(path) in result["sources"]:
+        raise ValueError("Duplicate RTL source: " + str(path))
+    result["sources"].append(str(path))
+
+
+def _add_defines(result, values):
+    for value in values:
+        if not re.fullmatch(r"[A-Za-z_]\w*(?:=[^\r\n]*)?", value):
+            raise ValueError("Invalid macro definition: " + value)
+        result["defines"].append(value)
+
+
+def parse_sources(arguments, filelist=None):
+    """Expand a file list first, then append literal source paths and +define+ options."""
+    result = parse(filelist, require_sources=False) if filelist else {
+        "sources": [], "include_dirs": [], "defines": [], "filelists": []}
+    for argument in arguments:
+        token = str(argument)
+        if token.startswith("+define+"):
+            _add_defines(result, token[8:].split("+"))
+        elif token.startswith("+"):
+            raise ValueError("Unsupported source argument: " + token + "; use +define+NAME or a .v/.sv path")
+        else:
+            _add_source(result, token)
+    if not result["sources"]:
+        raise ValueError("No RTL sources; provide .v/.sv files or a -f file list containing sources")
+    return result
+
+
+def parse(path, env=None, *, require_sources=True):
     env = os.environ if env is None else env
     result = {"sources": [], "include_dirs": [], "defines": [], "filelists": []}
     stack = []
@@ -63,26 +96,18 @@ def parse(path, env=None):
                         result["include_dirs"].append(str(p))
             elif token.startswith("+define+") or token.startswith("-D"):
                 values = token[8:].split("+") if token.startswith("+define+") else [token[2:]]
-                for value in values:
-                    if not re.fullmatch(r"[A-Za-z_]\w*(?:=[^\r\n]*)?", value):
-                        raise ValueError("Invalid macro definition: " + value)
-                    result["defines"].append(value)
+                _add_defines(result, values)
             elif token in ("-sv", "-sverilog"):
                 pass
             elif token.startswith(("-", "+")):
                 raise ValueError("Unsupported file-list option (never ignored): " + token)
             else:
-                p = (base / token).resolve()
-                if not p.is_file() or p.suffix.lower() not in (".v", ".sv"):
-                    raise ValueError("Expected an existing .v/.sv source: " + str(p))
-                if str(p) in result["sources"]:
-                    raise ValueError("Duplicate source in file list: " + str(p))
-                result["sources"].append(str(p))
+                _add_source(result, base / token)
         stack.pop()
 
     path = Path(path).resolve()
     visit(path, path.parent)
-    if not result["sources"]:
+    if require_sources and not result["sources"]:
         raise ValueError("Empty file list")
     return result
 

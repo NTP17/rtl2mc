@@ -18,16 +18,26 @@ def yosys(folder, label, script, tools, env):
     return log
 
 
-def source_read(inputs):
+def source_read(inputs, folder):
+    """Render literal macro definitions before the snapshotted source files."""
     args = ["-sv", "-noautowire"]
-    args += ["-I" + quote(p) for p in inputs["include_dirs"]]
-    args += ["-D" + quote(d) for d in inputs["defines"]]
+    # These are generated sources/dN paths, with no spaces or shell syntax.
+    args += ["-I" + p for p in inputs["include_dirs"]]
+    if inputs["defines"]:
+        # Yosys keeps quotes in -D options as part of the macro name/body.
+        # A Verilog prelude preserves spaces, quotes and backslashes literally.
+        definitions = []
+        for definition in inputs["defines"]:
+            name, separator, value = definition.partition("=")
+            definitions.append("`define " + name + " " + (value if separator else "1"))
+        write(Path(folder) / "source-defines.vh", "\n".join(definitions) + "\n")
+        args.append(quote("source-defines.vh"))
     args += [quote(p["file"]) for p in inputs["sources"]]
     return "read_verilog " + " ".join(args) + "\n"
 
 
 def interface(folder, inputs, top, tools, env):
-    yosys(folder, "interface", source_read(inputs) + "proc\nwrite_json interface.json\n", tools, env)
+    yosys(folder, "interface", source_read(inputs, folder) + "proc\nwrite_json interface.json\n", tools, env)
     modules = read(folder / "interface.json")["modules"]
     if top is None:
         instantiated = {c["type"] for m in modules.values() for c in m.get("cells", {}).values()}
@@ -133,8 +143,9 @@ def synthesize(folder, inputs, top, selection, tools, env, config, imported=None
     write(folder / "mapping.lib", liberty())
     # This helper creates the reference for equivalence. The commercial tool
     # still receives the original snapshotted source, not this lowered design.
-    yosys(folder, "reference", source_read(inputs) + f"hierarchy -check -top {top}\nsynth -top {top} -flatten -noabc\n"
-          "dffunmap\ncheck -assert\nwrite_rtlil golden.il\n", tools, env)
+    yosys(folder, "reference", source_read(inputs, folder) + f"hierarchy -check -top {top}\nsynth -top {top} -flatten -noabc\n"
+          # Newer Yosys versions retain flattened hierarchy as metadata cells.
+          "delete t:$scopeinfo\ndffunmap\ncheck -assert\nwrite_rtlil golden.il\n", tools, env)
     attempts = []
     backend = "import" if imported else None
     if imported:
@@ -178,6 +189,7 @@ def synthesize(folder, inputs, top, selection, tools, env, config, imported=None
     graph["provenance"] = {"sources": inputs["sources"], "compile_options": {k: inputs[k] for k in ("include_dirs", "defines")},
                            "backend": backend, "attempts": attempts,
                            "proof": "All Yosys equivalence cells proven against snapshotted source RTL",
-                           "files_sha256": {p.name: sha(p) for p in folder.iterdir() if p.suffix in (".ys", ".log", ".il")}}
+                           "files_sha256": {p.name: sha(p) for p in folder.iterdir()
+                                            if p.suffix in (".ys", ".log", ".il") or p.name == "source-defines.vh"}}
     dump(folder / "graph.json", graph)
     return graph
